@@ -51,6 +51,12 @@ from mcrcon import MCRcon
 
 #Create Log file for paramiko ssh for debugging if needed
 paramiko.util.log_to_file("paramiko.log")
+#Get current date and time then cast to string
+now = datetime.datetime.now()
+timestamp = str(now.strftime("%Y%m%d_%H-%M-%S"))
+#Create the backup file name
+file_name = "My-Minecraft-Backup_"+timestamp+".tar.gz"
+
 #Credentials maybe move this to a credentials file to be read in.
 username = "pi"
 host = "192.168.0.24"
@@ -99,18 +105,18 @@ if ms.online:
         #resp = mcr.command("say pretending to stop server \n")
         print("stopped minecraft server. \n")
         time.sleep(200) #Give server time to shutdown and do its thing
-	#Create tar calling tar function naming our backup My-Minecraft-Backup.tar.gz
-        tardirectory('/home/pi/minecraft/', 'My-Minecraft-Backup.tar.gz')
+	#Create tar calling tar function naming our backup filename My-Minecraft-Backup_timestamp.tar.gz
+        tardirectory('/home/pi/minecraft/%s', file_name)
         #change directory of remote server via paramiko point it to the path you want to store your backup in
         sftp.chdir(path='/home/pi/minecraftBackup')
         #Download get first part is path to local text file on remote sftp server path to the file you are trying to get.
-	#Second part is the path to where you are putting the file locally where the python script is run
-        #remotepath = '/home/pi/pythonscripts/My-Minecraft-Backup.tar.gz'
-        #mylocalpath = '/home/pi/minecraftBackup/My-Minecraft-Backup.tar.gz'
+        #Second part is the path to where you are putting the file locally where the python script is run
+        #remotepath = '/home/pi/pythonscripts/%s'%file_name
+        #mylocalpath = '/home/pi/minecraftBackup/%s'%file_name
         #sftp.get(remotepath, mylocalpath)
         #Upload put sends file from the pinecraft server aka mylocalpath to the remote server sftp via ssh aka remotepath which is a directory on the remote
-        remotepath = '/home/pi/minecraftBackup/My-Minecraft-Backup.tar.gz' #path to where you are putting the file on the NAS
-        mylocalpath = '/home/pi/pythonscripts/My-Minecraft-Backup.tar.gz'  #path to file you are wanting to transfer to the NAS
+        remotepath = '/home/pi/minecraftBackup/%s'%file_name #path to where you are putting the file on the NAS
+        mylocalpath = '/home/pi/pythonscripts/%s'%file_name  #path to file you are wanting to transfer to the NAS
         print("Transferring backup to remote server... \n")
         sftp.put(mylocalpath, remotepath)#the actual upload command to transfer
         #Close connections
