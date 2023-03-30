@@ -9,6 +9,7 @@ Thank you and I hope it works for you all!
 
 ***
 Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
+Pretty cool site that explains what each asterisk means. https://crontab.guru/#*_*_*_*_*
 ***
 
 **1. Open Linux Terminal.**
