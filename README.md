@@ -13,16 +13,31 @@ Instructions for setting up a cronjob Python Script via crontab in the Linux Env
 
 **1. Open Linux Terminal.**
 
-**2. Type 'crontab -e' to create crontab.**
+**2. Type below to create crontab.**
+'crontab -e'
 
-**3. Press 'i' to launch edit mode.**
+**3. Press below to launch edit mode.**
+'i'
 
-**4. Type the schedule command ' * * * * * /usr/bin/python /path/to/file/minecraftPiAutobackup.py; '**
+**4. Setup the time you want the crontab to schedule itself using the below command.**
+' * * * * * /usr/bin/python /path/to/file/minecraftPiAutobackup.py; '
 
-**5. Press 'esc' to exit edit mode.**
+**5. Press the escape key to exit edit mode.**
+'esc'
 
-**6. Type ' :wq ' to write your crontab.**
+**6. Type the below command to write your crontab.**
+':wq'
 
 **7. To delete the running job:**
-    **To delete the entire crontab: Run 'crontab -r'**
-    **To delete a single cron job: Go to 'crontab -e' , press 'i' , press 'dd' and press ' :wq ' to write the file.**
+
+**To delete the entire crontab: Run:**
+'crontab -r'
+
+**To delete a single cron job: Do the follow below to edit, delete, then write the file.**
+'crontab -e'
+
+'i'
+
+'dd'
+
+':wq'
