@@ -43,16 +43,28 @@ offline, then it will just boot the server up without doing anything else.
 import subprocess
 import paramiko
 import os
+import glob
+import sys
 import time
-import datetime
+from datetime import datetime, timedelta
 import minestat
 import tarfile
 from mcrcon import MCRcon
+import re
+import stat
+from tqdm import tqdm
+
+#paths to remote and local directories of interest
+r_path = '/home/pi/minecraftBackup'
+l_path = '/home/pi/pythonscripts'
 
 #Create Log file for paramiko ssh for debugging if needed
 paramiko.util.log_to_file("paramiko.log")
+#Define retention period default 7 days
+retention = 7
 #Get current date and time then cast to string
-now = datetime.datetime.now()
+now = datetime.now()
+retention_time = now - timedelta(days=retention)# Default set to days
 timestamp = str(now.strftime("%Y%m%d_%H-%M-%S"))
 #Create the backup file name
 file_name = "My-Minecraft-Backup_"+timestamp+".tar.gz"
@@ -91,6 +103,73 @@ def countdown(aMcr):
         count-=1
         time.sleep(1)
 
+####################### CAUTION #################################
+#   Kept functions separate in case one wants to do something   #
+#   different on local than on remote or vice versa             #
+#   function to delete files after retention of x days          #
+#                    default 7 days                             #
+####################### CAUTION #################################
+def delete_retention_local_files(retention_time, a_local_backuptargz_dir):
+    search_tar = os.path.join(a_local_backuptargz_dir, '*.tar.gz')
+    local_targzfiles = glob.glob(search_tar)
+    for time_file in local_targzfiles:
+        t_mod = os.path.getmtime(time_file)
+        t_mod = datetime.fromtimestamp(t_mod)
+        #print('{0} : {1}'.format(time_file, t_mod))
+        if retention_time > t_mod:
+            try:
+                os.remove(time_file)#THE LOCAL TIME BOMB
+                #print('Delete : Yes')
+            except Exception:
+                print('Delete : No')
+                print('Error : {0}'.format(sys.exc_info()))
+        else:
+            pass
+            #print('Delete : Not Required')
+
+##################### CAUTION ###################################
+# Paramiko glob and delete time bomb be very careful with this. #
+# IT WILL DELETE REMOTE TAR.GZ files recursively! BE WARNED!    #
+##################### CAUTION ###################################
+def paramiko_glob_timebomb(path, pattern, sftp, retention_time):
+    """
+    Search recursively for files matching a given pattern.
+    Parameters:
+        path (str): Path to directory on remote machine.
+        pattern (str): Python re [0] pattern for filenames.
+        sftp (SFTPClient): paramiko SFTPClient.
+
+    [0] https://docs.python.org/2/library/re.html
+    credit to lkluft on the paramiko glob. Thank you!
+    I tweaked it to do the removal of the timestamped files
+    """
+    p = re.compile(pattern)
+    root = sftp.listdir(path)
+    file_list = []
+
+    # Loop over all entries in given path...
+    for f in (os.path.join(path, entry) for entry in root):
+        f_stat = sftp.stat(f)
+        # ... if it is a directory call paramiko_glob recursively.
+        if stat.S_ISDIR(f_stat.st_mode):
+            file_list += paramiko_glob(f, pattern, sftp)
+        # ... if it is a file, check the name pattern and append it to file_list.
+        elif p.match(f):
+            file_list.append(f)
+
+    for rfiles in file_list:
+        #print("looping over remote files " + rfiles)
+        utime = sftp.stat(rfiles).st_mtime
+        last_modified = datetime.fromtimestamp(utime)
+        retention_time = now - timedelta(minutes=retention)
+        if retention_time > last_modified:
+            #print("Deleting the file " , last_modified)
+            sftp.remove(rfiles) #THE REMOTE TIME BOMB
+        else:
+            pass
+            #print("None passed Retention " , last_modified)
+    return file_list
+
 #Invoke Minestat to check if server is online then connect to MCRON use your own
 #server info in the below strings to reflect your server
 ms = minestat.MineStat('yourminecraftserveriporhostnameifyouhaveone', minecraft_port)
@@ -106,9 +185,12 @@ if ms.online:
         print("stopped minecraft server. \n")
         time.sleep(200) #Give server time to shutdown and do its thing
 	#Create tar calling tar function naming our backup filename My-Minecraft-Backup_timestamp.tar.gz
-        tardirectory('/home/pi/minecraft/%s', file_name)
+        #Show progress bar
+        for i in tqdm(range(0,100), colour="#ed5c1a", desc ="Progress: "):
+            tardirectory('/home/pi/minecraft/%s', file_name)
+            sleep(.1)
         #change directory of remote server via paramiko point it to the path you want to store your backup in
-        sftp.chdir(path='/home/pi/minecraftBackup')
+        sftp.chdir(path=r_path)
         #Download get first part is path to local text file on remote sftp server path to the file you are trying to get.
         #Second part is the path to where you are putting the file locally where the python script is run
         #remotepath = '/home/pi/pythonscripts/%s'%file_name
@@ -119,6 +201,13 @@ if ms.online:
         mylocalpath = '/home/pi/pythonscripts/%s'%file_name  #path to file you are wanting to transfer to the NAS
         print("Transferring backup to remote server... \n")
         sftp.put(mylocalpath, remotepath)#the actual upload command to transfer
+        #Show progress bar as it Loops over list and delete files that surpass retention period
+        #Start Local and Paramiko TimeBomb
+        for i in tqdm(range(0,100), colour="#ed5c1a", desc ="Progress: "):
+            delete_retention_local_files(retention_time, l_path)
+            NAS_files = paramiko_glob_timebomb(r_path, '.*\.tar.gz', sftp, retention_time)
+            sleep(.1)
+        print(NAS_files)
         #Close connections
         sftp.close()
         transport.close()
