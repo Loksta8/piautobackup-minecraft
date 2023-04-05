@@ -7,9 +7,9 @@ is safe, not only on your local machine, but also on a remote NAS, that you host
 All are welcome to help me make this more efficient and better as it evolves.
 Thank you and I hope it works for you all! Pretty cool site that explains what each asterisk means. https://crontab.guru/#\*_\*_\*_\*_\*\
 
-***
-Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
-***
+> ***
+> Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
+> ***
 
 > **Warning**
 > This software when run will delete .tar.gz files recursively if paths point to
