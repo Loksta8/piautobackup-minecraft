@@ -5,7 +5,7 @@ the ability to automate the process of warning players that the server will be b
 sftp the backup over to a remote NAS, and rebooting the server. This will all be done with the ease of mind knowing your backup
 is safe, not only on your local machine, but also on a remote NAS, that you host as well.
 All are welcome to help me make this more efficient and better as it evolves.
-Thank you and I hope it works for you all! Pretty cool site that explains what each asterisk means. https://crontab.guru/#\*_\*_\*_\*_\*
+Thank you and I hope it works for you all! Pretty cool site that explains what each asterisk means. https://crontab.guru/#\*_\*_\*_\*_\*\
 
 ***
 Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
