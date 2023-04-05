@@ -8,7 +8,7 @@ All are welcome to help me make this more efficient and better as it evolves.
 Thank you and I hope it works for you all! Pretty cool site that explains what each asterisk means. https://crontab.guru/#\*_\*_\*_\*_\*\
 
  ***
- Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
+> Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
  ***
 
 > **Warning**
