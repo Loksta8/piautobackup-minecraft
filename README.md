@@ -11,10 +11,10 @@ Thank you and I hope it works for you all! Pretty cool site that explains what e
 Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
 ***
 
-**Warning**
-This software when run will delete .tar.gz files recursively if paths point to
-directories within other directories. Make sure you don't have anything worth
-losing. This goes both on your local machine and on your remote machine!
+> **Warning**
+> This software when run will delete .tar.gz files recursively if paths point to
+> directories within other directories. Make sure you don't have anything worth
+> losing. This goes both on your local machine and on your remote machine!
 
 **1. Open Linux Terminal.**
 
