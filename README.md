@@ -16,7 +16,7 @@ Thank you and I hope it works for you all! Pretty cool site that explains what e
 > directories within other directories. Make sure you don't have anything worth
 > losing. Deletion happens on your local machine and on your remote machine!
 
-> **Note **
+> **Note**
 First you must edit the `minecraftPiAutobackup.py` file with your own server and ssh password information. Edit the times if you'd like and then set this script up as a cronjob
 
 **1. Open Linux Terminal.**
