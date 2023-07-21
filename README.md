@@ -14,10 +14,15 @@ Thank you and I hope it works for you all! Pretty cool site that explains what e
 > **Warning**
 > This software when run will delete .tar.gz files recursively if paths point to
 > directories within other directories. Make sure you don't have anything worth
-> losing. Deletion happens on your local machine and on your remote machine!
+> losing. Deletion happens on your local machine and on your remote machine! Use
+> at your own risk!
 
 > **Note**
-First you must edit the `minecraftPiAutobackup.py` file with your own server and ssh password information. Edit the times if you'd like and then set this script up as a cronjob
+First you must enter your server info in the `config.json` and if you have an ssh key password enter that in `minecraftPiAutobackup.py` file.
+If you don't want to use a config file, enter your own server and ssh password information in the `minecraftPiAutobackup.py` script instead and it will be the default.
+
+**1a. If you want to just run the script with a config file, run the command.**
+'python minecraftPiAutobackup.py --config config.json'
 
 **1. Open Linux Terminal.**
 
