@@ -5,16 +5,19 @@ the ability to automate the process of warning players that the server will be b
 sftp the backup over to a remote NAS, and rebooting the server. This will all be done with the ease of mind knowing your backup
 is safe, not only on your local machine, but also on a remote NAS, that you host as well.
 All are welcome to help me make this more efficient and better as it evolves.
-Thank you and I hope it works for you all! Pretty cool site that explains what each asterisk means. https://crontab.guru/#*_*_*_*_*
+Thank you and I hope it works for you all! Pretty cool site that explains what each asterisk means. https://crontab.guru/#\*_\*_\*_\*_\*\
 
-***
-Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
-***
+ ***
+> Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
+ ***
 
-**Warning**
-This software when run will delete .tar.gz files recursively if paths point to
-directories within other directories. Make sure you don't have anything worth
-losing. This goes both on your local machine and on your remote machine!
+> **Warning**
+> This software when run will delete .tar.gz files recursively if paths point to
+> directories within other directories. Make sure you don't have anything worth
+> losing. Deletion happens on your local machine and on your remote machine!
+
+> **Note**
+First you must edit the `minecraftPiAutobackup.py` file with your own server and ssh password information. Edit the times if you'd like and then set this script up as a cronjob
 
 **1. Open Linux Terminal.**
 
