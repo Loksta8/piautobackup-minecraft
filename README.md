@@ -20,9 +20,14 @@ Thank you and I hope it works for you all! Pretty cool site that explains what e
 > 
 > First you must enter your server info in the `config.json` and if you have an ssh key password enter that in `minecraftPiAutobackup.py` file.
 > If you don't want to use a config file, enter your own server and ssh password information in the `minecraftPiAutobackup.py` script instead and it will be the default.
+>
 
 
 **1. Open Linux Terminal.**
+
+***1a. If you want to just run the script with a config file, run the command.***
+
+`python minecraftPiAutobackup.py --config config.json`
 
 **2. Type below to create crontab.**
 
