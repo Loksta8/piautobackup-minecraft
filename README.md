@@ -7,22 +7,20 @@ is safe, not only on your local machine, but also on a remote NAS, that you host
 All are welcome to help me make this more efficient and better as it evolves.
 Thank you and I hope it works for you all! Pretty cool site that explains what each asterisk means. https://crontab.guru/#\*_\*_\*_\*_\*\
 
- ***
-> Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92
- ***
+> ***Instructions for setting up a cronjob Python Script via crontab in the Linux Environment: Python version:3.92***
 
-> **Warning**
-> This software when run will delete .tar.gz files recursively if paths point to
+> :warning: **Warning:**
+>
+> ***This software when run will delete .tar.gz files recursively if paths point to
 > directories within other directories. Make sure you don't have anything worth
 > losing. Deletion happens on your local machine and on your remote machine! Use
-> at your own risk!
+> at your own risk!***
 
-> **Note**
-First you must enter your server info in the `config.json` and if you have an ssh key password enter that in `minecraftPiAutobackup.py` file.
-If you don't want to use a config file, enter your own server and ssh password information in the `minecraftPiAutobackup.py` script instead and it will be the default.
+> 📔 **Note:**
+> 
+> First you must enter your server info in the `config.json` and if you have an ssh key password enter that in `minecraftPiAutobackup.py` file.
+> If you don't want to use a config file, enter your own server and ssh password information in the `minecraftPiAutobackup.py` script instead and it will be the default.
 
-**1a. If you want to just run the script with a config file, run the command.**
-'python minecraftPiAutobackup.py --config config.json'
 
 **1. Open Linux Terminal.**
 
